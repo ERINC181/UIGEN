@@ -39,11 +39,24 @@ jobs:
       - name: Project Setup
         run: npm run setup
 
+      - name: Start Dev Server
+        run: npm run dev > logs.txt 2>&1 &
+
+      - name: Wait for Server
+        run: npx wait-on http://localhost:3000 --timeout 60000
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          custom_instructions: |
+            The project is already set up with all dependencies installed.
+            The server is already running at localhost:3000. Logs from it
+            are being written to logs.txt. If needed, you can query the
+            db with the 'sqlite3' cli. If needed, use the mcp__playwright
+            set of tools to launch a browser and interact with the app.
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
