@@ -49,3 +49,9 @@ next-env.d.ts
 # database
 /prisma/dev.db
 /prisma/dev.db-journal
+
+# Playwright MCP debug artifacts (auto-generated during browser automation)
+.playwright-mcp/
+
+# Workshop/session photo staging (belongs in its own project, not here)
+photo_414_sorted/
